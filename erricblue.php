@@ -156,7 +156,7 @@ add_filter('wp_mail_from_name', 'erric_fromname');
  */
 function erric_widget_custom_tag_cloud($args) {
 	// Control number of tags to be displayed - 0 no tags
-	$args['number'] = 10;
+	$args['number'] = 25;
 
 	// Outputs our edited widget
 	return $args;
