@@ -147,4 +147,20 @@ function erric_fromname($email){
 add_filter('wp_mail_from', 'erric_fromemail');
 add_filter('wp_mail_from_name', 'erric_fromname');
 
+
+
+/**
+ * Limit tags number in Tag Cloud Widget
+ * http://wpshock.com/customize-default-wordpress-tag-cloud-widget-wordpress-filter/
+ * @param type $args 
+ */
+function erric_widget_custom_tag_cloud($args) {
+	// Control number of tags to be displayed - 0 no tags
+	$args['number'] = 10;
+
+	// Outputs our edited widget
+	return $args;
+}
+add_filter( 'widget_tag_cloud_args', 'erric_widget_custom_tag_cloud' );
+
 /* Stop Adding Functions Below this Line */
