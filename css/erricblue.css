@@ -1,0 +1,134 @@
+/* =============================================================================
+Recent Comments Extended Widget
+http://www.ghostpool.com/freebies/creating-a-recent-comments-widget/
+============================================================================= */
+#recent-comments {
+	width: 100%; 
+}   
+
+#recent-comments ul, #recent-comments li { 
+	width: 100%; 
+	list-style-image: none; 
+	list-style-type: none; 
+	margin: 0; 
+	padding: 0; 
+}   
+
+#recent-comments li { 
+	margin-bottom: 15px; 
+}   
+
+#recent-comments .avatar { 
+	float: left; 
+	margin-right: 10px; 
+}   
+
+#recent-comments .comment-excerpt { 
+	line-height: 19px; 
+}   
+
+#recent-comments .comment-author { 
+	font-size: 11px; 
+}
+/* =============================================================================
+End of Recent Comments Extended Widget
+============================================================================= */
+
+
+
+/* =============================================================================
+Theme Custom CSS - act like a child theme
+============================================================================= */
+/* =============================================================================
+- Base
+Basic and global styles for structural layout, page templates and link styles
+============================================================================= */
+body {
+	color: #fff; /* #333333 #9EB9D1 */
+}
+
+
+/* 	LINKS
+	----------------- */
+a {
+	color: #9EB9D1; /* #5e9ae2; */
+	text-decoration: none;
+}
+a:visited {
+	color: #9EB9D1; /* #2789ff; */
+}
+a:hover {
+	color: #D1D09E; /* #4197ff; */
+	text-decoration: none;
+}
+
+
+/* 	STRUCTURAL LAYOUT
+	----------------- */
+#page {
+	background-color: #111111; /* white; */
+	opacity: 0.75;
+}
+
+#secondary {
+	background-color: #000000; /* whitesmoke; */
+}
+
+
+/* 	BLOCKQUOTE
+	----------------- */
+blockquote {
+	color: whitesmoke; /* #aaaaaa; */
+}
+
+
+/* =============================================================================
+- Main styles
+Global and main styles
+============================================================================= */
+.site-branding .site-title a {
+	color: #9EB9D1; /* #333333; */
+}
+
+
+/* 	MAIN STYLES
+	----------------- */
+article .entry-title a {
+	color: #9EB9D1; /* #333333; */
+}
+
+.entry-meta {
+	color: whitesmoke; /* #999999; */
+}
+
+.entry-meta a:hover {
+	color: #9EB9D1; /* #333333; */
+}
+
+
+/*	ARCHIVES PAGE
+	----------------- */
+.archives-content .archives-left ul li a,
+.archives-content .archives-right ul li a {
+	/*  color: #555555;*/
+}
+
+
+/* 	CUSTOM SOCIAL SHARE WIDGET
+	----------------- */
+#colophon {
+	background: #222222; /* white; #222222; #5e9ae2; #2789ff; #4197ff; */
+	opacity: 0.6;
+}
+
+
+/* 	SOCIAL SHARE BUTTONS
+	----------------- */
+.share p.share-title {
+	color: whitesmoke; /* #555555; */
+}
+
+
+/* =============================================================================
+End of Theme Custom CSS
+============================================================================= */
