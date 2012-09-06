@@ -166,21 +166,36 @@ add_filter( 'widget_tag_cloud_args', 'erric_widget_custom_tag_cloud' );
 
 
 /**
- * remove filter for excerpt; put it on after_setup_theme hook
- * http://codex.wordpress.org/Customizing_the_Read_More#Displaying_a_.22more.E2.80.A6.22_link_without_a_.3C--more--.3E_tag
- * 
- * later on, add a new filter for excerpt_more 
+ * remove filter for excerpt, then add new filters for excerpt
  */
+
+// remove theme filters; put it on after_setup_theme hook
+// http://codex.wordpress.org/Customizing_the_Read_More#Displaying_a_.22more.E2.80.A6.22_link_without_a_.3C--more--.3E_tag
 function erric_theme_setup() {
 	// override parent theme's 'more' text for excerpts
 	remove_filter( 'excerpt_more', 'tiga_auto_excerpt_more' ); 
-//	remove_filter( 'get_the_excerpt', 'tiga_custom_excerpt_more' );
+	remove_filter( 'get_the_excerpt', 'tiga_custom_excerpt_more' );
 }
 add_action( 'after_setup_theme', 'erric_theme_setup' );
 
+// create new reading link; use get_the_title() for more dynamic link
+function erric_continue_reading_link() {
+	return ' <a href="'. esc_url( get_permalink() ) . '">' . sprintf(__( 'More on %s <span class="meta-nav">&rarr;</span>', 'erric' ), get_the_title())  . '</a>';
+}
+
+// filter to auto excerpt
 add_filter( 'excerpt_more', 'erric_auto_excerpt_more' );
 function erric_auto_excerpt_more( $more ) {
-	return ' &hellip;' . ' <a href="'. esc_url( get_permalink() ) . '">' . sprintf(__( 'More on %s <span class="meta-nav">&rarr;</span>', 'erric' ), get_the_title())  . '</a>';
+	return ' &hellip;' . erric_continue_reading_link();
+}
+
+// filter to manual/custom excerpt
+add_filter( 'get_the_excerpt', 'erric_custom_excerpt_more' );
+function erric_custom_excerpt_more( $output ) {
+	if ( has_excerpt() && ! is_attachment() ) {
+		$output .= ' &hellip;' . erric_continue_reading_link();
+	}
+	return $output;
 }
 
 
@@ -198,8 +213,11 @@ function erric_content_preview() {
 
 	if ( (isset($matches[1])) && (!empty($matches[1])) ) {
 		return the_content();
+	} elseif (str_word_count(get_the_excerpt()) < 35) {
+		echo get_the_excerpt() . ' &hellip;' . erric_continue_reading_link();
+	} else {
+		return the_excerpt();
 	}
-	return the_excerpt();
 }
 
 
