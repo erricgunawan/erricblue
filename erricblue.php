@@ -114,7 +114,7 @@ class Recent_Comments extends WP_Widget {
 		$defaults = array('title' => __('Recent Comments', 'erric'), 'number' => '5'); $instance = wp_parse_args((array) $instance, $defaults ); ?>
 
 		<p>
-			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
+			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'erric'); ?></label>
 			<br/><input class="widefat" type="text" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo $instance['title']; ?>" />
 		</p>
 
@@ -162,5 +162,45 @@ function erric_widget_custom_tag_cloud($args) {
 	return $args;
 }
 add_filter( 'widget_tag_cloud_args', 'erric_widget_custom_tag_cloud' );
+
+
+
+/**
+ * remove filter for excerpt; put it on after_setup_theme hook
+ * http://codex.wordpress.org/Customizing_the_Read_More#Displaying_a_.22more.E2.80.A6.22_link_without_a_.3C--more--.3E_tag
+ * 
+ * later on, add a new filter for excerpt_more 
+ */
+function erric_theme_setup() {
+	// override parent theme's 'more' text for excerpts
+	remove_filter( 'excerpt_more', 'tiga_auto_excerpt_more' ); 
+//	remove_filter( 'get_the_excerpt', 'tiga_custom_excerpt_more' );
+}
+add_action( 'after_setup_theme', 'erric_theme_setup' );
+
+add_filter( 'excerpt_more', 'erric_auto_excerpt_more' );
+function erric_auto_excerpt_more( $more ) {
+	return ' &hellip;' . ' <a href="'. esc_url( get_permalink() ) . '">' . sprintf(__( 'More on %s <span class="meta-nav">&rarr;</span>', 'erric' ), get_the_title())  . '</a>';
+}
+
+
+
+/**
+ * Choose whether to show the_content() or the_excerpt() in the loop
+ * if post has a custom more text, then use the_content(), otherwise, use the_excerpt()
+ * inspired by http://digwp.com/2010/01/wordpress-more-tag-tricks/
+ */
+function erric_content_preview() {
+	global $post, $page, $pages;
+//	$custom_more = get_post_meta($post->ID, "custom_more_text", true);
+	$content = $pages[$page-1];	
+	preg_match('/<!--more(.*?)?-->/', $content, $matches);
+
+	if (isset($matches[1])) {
+		return the_content();
+	}
+	return the_excerpt();
+}
+
 
 /* Stop Adding Functions Below this Line */
