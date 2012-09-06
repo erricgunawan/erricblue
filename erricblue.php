@@ -192,11 +192,11 @@ function erric_auto_excerpt_more( $more ) {
  */
 function erric_content_preview() {
 	global $post, $page, $pages;
-//	$custom_more = get_post_meta($post->ID, "custom_more_text", true);
+
 	$content = $pages[$page-1];	
 	preg_match('/<!--more(.*?)?-->/', $content, $matches);
 
-	if (isset($matches[1])) {
+	if ( (isset($matches[1])) && (!empty($matches[1])) ) {
 		return the_content();
 	}
 	return the_excerpt();
