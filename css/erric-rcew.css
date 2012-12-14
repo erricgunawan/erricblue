@@ -1,0 +1,35 @@
+/* =============================================================================
+Recent Comments Extended Widget
+http://www.ghostpool.com/freebies/creating-a-recent-comments-widget/
+============================================================================= */
+#recent-comments {
+	width: 100%; 
+}   
+
+#recent-comments ul, #recent-comments li { 
+	width: 100%; 
+	list-style-image: none; 
+	list-style-type: none; 
+	margin: 0; 
+	padding: 0; 
+}   
+
+#recent-comments li { 
+	margin-bottom: 15px; 
+}   
+
+#recent-comments .avatar { 
+	float: left; 
+	margin-right: 10px; 
+}   
+
+#recent-comments .comment-excerpt { 
+	line-height: 19px; 
+}   
+
+#recent-comments .comment-author { 
+	font-size: 11px; 
+}
+/* =============================================================================
+End of Recent Comments Extended Widget
+============================================================================= */
