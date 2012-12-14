@@ -3,9 +3,9 @@
  * Extending The Recent Comments Widget
  * http://www.ghostpool.com/freebies/creating-a-recent-comments-widget/
  */
-add_action( 'widgets_init', 'erric_widgets_init' );
+add_action( 'widgets_init', 'erric_rcew_widgets_init' );
 
-function erric_widgets_init() {
+function erric_rcew_widgets_init() {
 	register_widget('Recent_Comments');
 }
 
@@ -97,3 +97,11 @@ class Recent_Comments extends WP_Widget {
 	}
 	
 }
+
+/**
+ * Enqueue Recent Comments Extended Widget styles
+ */
+function erric_rcew_styles() {
+	wp_enqueue_style('erric-rcew', ERRICBLUE_PLUGIN_URL . '/css/erric-rcew.css');
+}
+add_action('wp_print_styles', 'erric_rcew_styles');
