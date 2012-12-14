@@ -20,11 +20,13 @@ http://www.ghostpool.com/freebies/creating-a-recent-comments-widget/
 
 #recent-comments .avatar { 
 	float: left; 
-	margin-right: 10px; 
+	margin-right: 10px;
+	margin-top: 5px;
 }   
 
 #recent-comments .comment-excerpt { 
 	line-height: 19px; 
+	min-height: 40px;
 }   
 
 #recent-comments .comment-author { 
