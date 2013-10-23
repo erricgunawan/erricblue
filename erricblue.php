@@ -59,6 +59,31 @@ add_filter( 'wp_mail_from_name', 'erric_fromname' );
 
 
 
+/**
+ * Add default image for posting in Facebook
+ * http://wordpress.org/plugins/facebook-thumb-fixer/
+ */
+function erric_fbfiximage() {
+
+	if ( has_post_thumbnail() ) {
+		$featuredimg = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), "Full");
+		$ftf_head = '
+<!--/ Open Graph Tweak /-->
+<meta property="og:image" content="' . $featuredimg[0] . '" />
+';
+	} else {
+		$ftf_head = '
+<!--/ Open Graph Tweak /-->
+<meta property="og:image" content="http://gravatar.com/avatar/d5726dc48c1feb7e8cbdd5599961c664?s=200" />
+';
+	}
+	echo $ftf_head;
+	print "\n";
+
+}
+
+add_action( 'wp_head', 'erric_fbfiximage' );
+
 
 
 /* Stop Adding Functions Below this Line */
