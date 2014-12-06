@@ -1,11 +1,12 @@
 <?php
 /**
  * Plugin Name: Erric Blue
- * Plugin URI: http://www.wpbeginner.com/beginners-guide/what-why-and-how-tos-of-creating-a-site-specific-wordpress-plugin/
+ * Plugin URI: https://github.com/erricgunawan/erricblue
  * Description: Site specific code changes for Eric Gunawan in Blue
- * Version: 1.2
+ * Version: 1.2.1
  * Author: erricgunawan
  * Author URI: http://erricgunawan.com
+ * Source: http://www.wpbeginner.com/beginners-guide/what-why-and-how-tos-of-creating-a-site-specific-wordpress-plugin/
  */
 
 /* Start Adding Functions Below this Line */
