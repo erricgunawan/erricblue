@@ -61,29 +61,68 @@ add_filter( 'wp_mail_from_name', 'erric_fromname' );
 
 /**
  * Add default image for posting in Facebook
- * http://wordpress.org/plugins/facebook-thumb-fixer/
+ * modified from http://wordpress.org/plugins/facebook-thumb-fixer/
  */
+add_action( 'wp_head', 'erric_fbfiximage' );
+
 function erric_fbfiximage() {
 
+	// check Featured Image first
 	if ( has_post_thumbnail() ) {
-		$featuredimg = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), "Full");
-		$ftf_head = '
-<!--/ Open Graph Tweak /-->
-<meta property="og:image" content="' . $featuredimg[0] . '" />
-';
+		global $post;
+		$featuredimg = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), "full" );
+		$fbimage = $featuredimg[0];
+
+	// then check if any first image exist; this will be likely used
+	} else if ( erric_get_first_image() ) {
+		$fbimage = erric_get_first_image();
+
+	// if all fails, fallback to Gravatar
 	} else {
-		$ftf_head = '
-<!--/ Open Graph Tweak /-->
-<meta property="og:image" content="http://gravatar.com/avatar/d5726dc48c1feb7e8cbdd5599961c664?s=200" />
-';
+		$fbimage = 'http://gravatar.com/avatar/d5726dc48c1feb7e8cbdd5599961c664?s=200';
+
 	}
-	echo $ftf_head;
-	print "\n";
+
+	// Sanitize for output
+	$fbimage = esc_url( $fbimage );
+
+?>
+<!--/ Erric Open Graph Tweak /-->
+<meta property="og:image" content="<?php echo $fbimage; ?>" />
+<?php
 
 }
 
-add_action( 'wp_head', 'erric_fbfiximage' );
+/**
+* Return an HTML img tag for the first image in a post content. Used to draw
+* the content for posts of the “image” format.
+* http://css-tricks.com/snippets/wordpress/get-the-first-image-from-a-post/#comment-1582091 --> not working
+* http://www.wprecipes.com/how-to-get-the-first-image-from-the-post-and-display-it
+*
+* @return string An HTML img tag for the first image in a post content.
+*/
+function erric_get_first_image() {
 
+	// Expose information about the current post.
+	global $post;
+
+	// We'll trap to see if this stays empty later in the function.
+	$src = '';
+
+	// Grab all img src's in the post content
+	// $output = preg_match_all( '//i', $post->post_content, $matches ); // not working
+	$output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches);
+
+	// Grab the first img src returned by our regex.
+	if( ! isset ( $matches[1][0] ) ) { return false; }
+	$src = $matches[1][0];
+
+	// Make sure there's still something worth outputting after sanitization.
+	if( empty( $src ) ) { return false; }
+
+	return $src;
+
+}
 
 
 /* Stop Adding Functions Below this Line */
